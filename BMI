@@ -1,0 +1,60 @@
+
+import tkinter as tk
+from tkinter import messagebox
+
+def calculate_bmi():
+    try:
+        # Get user input from entry fields
+        height = float(entry_height.get())
+        weight = float(entry_weight.get())
+        
+        if height <= 0 or weight <= 0:
+            raise ValueError("Height and weight must be positive values.")
+        
+        # Convert height from centimeters to meters
+        height_meters = height / 100
+        
+        # Calculate BMI
+        bmi = weight / (height_meters ** 2)
+        
+        # Display the result
+        result_text = f"Your BMI is: {bmi:.2f}"
+        
+        # Determine the BMI category
+        if bmi < 18.5:
+            category = "Underweight"
+        elif 18.5 <= bmi < 24.9:
+            category = "Normal weight"
+        elif 25 <= bmi < 29.9:
+            category = "Overweight"
+        else:
+            category = "Obesity"
+        
+        result_text += f"\nCategory: {category}"
+        messagebox.showinfo("BMI Result", result_text)
+    
+    except ValueError as e:
+        messagebox.showerror("Invalid input", str(e))
+
+# Create the main application window
+app = tk.Tk()
+app.title("BMI Calculator")
+
+# Create and place the height label and entry field
+label_height = tk.Label(app, text="Enter height (cm):")
+label_height.grid(column=0, row=0, padx=10, pady=10)
+entry_height = tk.Entry(app)
+entry_height.grid(column=1, row=0, padx=10, pady=10)
+
+# Create and place the weight label and entry field
+label_weight = tk.Label(app, text="Enter weight (kg):")
+label_weight.grid(column=0, row=1, padx=10, pady=10)
+entry_weight = tk.Entry(app)
+entry_weight.grid(column=1, row=1, padx=10, pady=10)
+
+# Create and place the calculate button
+button_calculate = tk.Button(app, text="Calculate BMI", command=calculate_bmi)
+button_calculate.grid(column=0, row=2, columnspan=2, padx=10, pady=10)
+
+# Start the GUI event loop
+app.mainloop()
